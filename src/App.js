@@ -1,10 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Navigator from "./routes/route";
 
 export const App = () => {
   return (
     <>
-      <h3>School Management System</h3>
+      <Navigator />
     </>
   );
 };
