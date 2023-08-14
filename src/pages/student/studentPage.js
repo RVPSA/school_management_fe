@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Input, InputGroup, Row } from "reactstrap";
-import TextInputField from "../component/textInputField";
-import CButton from "../component/Button/button";
-import { MainContainer } from "../component/mainCard";
-import { MainContainerHeader } from "../component/mainContainerHeader";
+import TextInputField from "../../component/textInputField";
+import CButton from "../../component/Button/button";
+import { MainContainer } from "../../component/mainCard";
+import { MainContainerHeader } from "../../component/mainContainerHeader";
+import { StudentDetails } from "./collection/studentDetail";
 
 export const StudentPage = () => {
   const [formValues, setFormValues] = useState({});
@@ -12,6 +13,7 @@ export const StudentPage = () => {
   const [btnOutlineAdd, setBtnOutlineAdd] = useState(false);
   const [btnOutlineFind, setBtnOutlineFind] = useState(true);
   const [addStudent, setAddStudent] = useState(true);
+  const [studentId, setStudentId] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +29,21 @@ export const StudentPage = () => {
     if (!values.firstName) {
       errors.firstName = "Please enter first name";
     }
+    if (!values.lastName) {
+      errors.lastName = "Please enter last name";
+    }
+    if (!values.contactPerson) {
+      errors.contactPerson = "Please enter contact person";
+    }
+    if (!values.mobileNumber) {
+      errors.mobileNumber = "Please enter mobile number";
+    }
+    if (!values.eMail) {
+      errors.eMail = "Please enter email";
+    }
+    if (!values.dob) {
+      errors.dob = "Please enter Date of birth";
+    }
     return errors;
   };
 
@@ -41,6 +58,10 @@ export const StudentPage = () => {
     setAddStudent(false);
   };
 
+  const findStudent = () => {
+    if (studentId === "") console.log("Enter a Id");
+    else console.log("Student Id:", studentId);
+  };
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
@@ -96,9 +117,9 @@ export const StudentPage = () => {
                         label="Last Name"
                         name="lastName"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
+                        invalid={formErrors.lastName ? true : false}
                         formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
+                          formErrors.lastName ? formErrors.lastName : ""
                         }
                       />
                     </Col>
@@ -109,9 +130,11 @@ export const StudentPage = () => {
                         label="Contact Person"
                         name="contactPerson"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
+                        invalid={formErrors.contactPerson ? true : false}
                         formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
+                          formErrors.contactPerson
+                            ? formErrors.contactPerson
+                            : ""
                         }
                       />
                     </Col>
@@ -120,9 +143,9 @@ export const StudentPage = () => {
                         label="Mobile Number"
                         name="mobileNumber"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
+                        invalid={formErrors.mobileNumber ? true : false}
                         formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
+                          formErrors.mobileNumber ? formErrors.mobileNumber : ""
                         }
                       />
                     </Col>
@@ -133,10 +156,8 @@ export const StudentPage = () => {
                         label="E-mail"
                         name="eMail"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
-                        formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
-                        }
+                        invalid={formErrors.eMail ? true : false}
+                        formFeedBack={formErrors.eMail ? formErrors.eMail : ""}
                       />
                     </Col>
                     <Col>
@@ -144,10 +165,8 @@ export const StudentPage = () => {
                         label="Date of Birth"
                         name="dob"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
-                        formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
-                        }
+                        invalid={formErrors.dob ? true : false}
+                        formFeedBack={formErrors.dob ? formErrors.dob : ""}
                       />
                     </Col>
                     <Col>
@@ -155,10 +174,8 @@ export const StudentPage = () => {
                         label="Age"
                         name="age"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
-                        formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
-                        }
+                        invalid={formErrors.age ? true : false}
+                        formFeedBack={formErrors.age ? formErrors.age : ""}
                       />
                     </Col>
                   </Row>
@@ -168,10 +185,8 @@ export const StudentPage = () => {
                         label="Age"
                         name="age"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
-                        formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
-                        }
+                        invalid={formErrors.age ? true : false}
+                        formFeedBack={formErrors.age ? formErrors.age : ""}
                       />
                     </Col>
                     <Col className="col-3 align-self-center">
@@ -190,14 +205,21 @@ export const StudentPage = () => {
                 <Col className="col-10 ">
                   <Row>
                     <InputGroup>
-                      <Input placeholder="Enter Student ID"></Input>
+                      <Input
+                        placeholder="Enter Student ID"
+                        onChange={(e) => setStudentId(e.target.value)}
+                        value={studentId}
+                      ></Input>
                       <CButton
                         text="Find"
                         outline={btnOutlineAdd}
                         color="success"
-                        onClick={() => {}}
+                        onClick={findStudent}
                       />
                     </InputGroup>
+                  </Row>
+                  <Row>
+                    <StudentDetails />
                   </Row>
                 </Col>
               )}

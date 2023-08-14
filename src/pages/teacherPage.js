@@ -23,6 +23,15 @@ export const TeacherPage = () => {
     if (!values.firstName) {
       errors.firstName = "Please enter first name";
     }
+    if (!values.lastName) {
+      errors.lastName = "Please enter last name";
+    }
+    if (!values.mobileNumber) {
+      errors.mobileNumber = "Please enter mobile number";
+    }
+    if (!values.eMail) {
+      errors.eMail = "Please enter email";
+    }
     return errors;
   };
   useEffect(() => {
@@ -56,9 +65,9 @@ export const TeacherPage = () => {
                       label="Last Name"
                       name="lastName"
                       onChange={handleChange}
-                      invalid={formErrors.firstName ? true : false}
+                      invalid={formErrors.lastName ? true : false}
                       formFeedBack={
-                        formErrors.firstName ? formErrors.firstName : ""
+                        formErrors.lastName ? formErrors.lastName : ""
                       }
                     />
                   </Col>
@@ -69,10 +78,8 @@ export const TeacherPage = () => {
                       label="E-mail"
                       name="eMail"
                       onChange={handleChange}
-                      invalid={formErrors.firstName ? true : false}
-                      formFeedBack={
-                        formErrors.firstName ? formErrors.firstName : ""
-                      }
+                      invalid={formErrors.eMail ? true : false}
+                      formFeedBack={formErrors.eMail ? formErrors.eMail : ""}
                     />
                   </Col>
                   <Col className="col-4">
@@ -80,9 +87,9 @@ export const TeacherPage = () => {
                       label="Mobile Number"
                       name="mobileNumber"
                       onChange={handleChange}
-                      invalid={formErrors.firstName ? true : false}
+                      invalid={formErrors.mobileNumber ? true : false}
                       formFeedBack={
-                        formErrors.firstName ? formErrors.firstName : ""
+                        formErrors.mobileNumber ? formErrors.mobileNumber : ""
                       }
                     />
                   </Col>

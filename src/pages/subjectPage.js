@@ -4,6 +4,8 @@ import { MainContainerHeader } from "../component/mainContainerHeader";
 import { Col, Container, Row, Input, InputGroup } from "reactstrap";
 
 import CButton from "../component/Button/button";
+import TextInputField from "../component/textInputField";
+import { Loading } from "../component/loading/loadingSpinner";
 
 export const SubjectPage = () => {
   const [formValues, setFormValues] = useState({});
@@ -20,8 +22,8 @@ export const SubjectPage = () => {
   };
   const validate = (values) => {
     const errors = {};
-    if (!values.firstName) {
-      errors.firstName = "Please enter first name";
+    if (!values.subjectName) {
+      errors.subjectName = "Please enter subject name";
     }
     return errors;
   };
@@ -40,15 +42,27 @@ export const SubjectPage = () => {
             <Row>
               <Col>
                 <Row>
-                  <InputGroup>
-                    <Input placeholder="Subject Name"></Input>
+                  <Col className="col-10">
+                    <TextInputField
+                      placeholder="Subject Name"
+                      onChange={handleChange}
+                      name="subjectName"
+                      invalid={formErrors.subjectName ? true : false}
+                      formFeedBack={
+                        formErrors.subjectName ? formErrors.subjectName : ""
+                      }
+                    ></TextInputField>
+                  </Col>
+                  <Col style={{ paddingTop: 25 }}>
                     <CButton
                       text="Add"
                       outline={true}
                       color="success"
-                      onClick={() => {}}
+                      onClick={() => {
+                        handleSubmit();
+                      }}
                     />
-                  </InputGroup>
+                  </Col>
                 </Row>
               </Col>
             </Row>

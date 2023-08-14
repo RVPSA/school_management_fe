@@ -1,12 +1,12 @@
 import React from "react";
 import Layout from "../component/layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import StudentPage from "../pages/studentPage";
+import StudentPage from "../pages/student/studentPage";
 import { TeacherPage } from "../pages/teacherPage";
 import HomePage from "../pages/homePage";
 import { ClassRoomPage } from "../pages/classRoomPage";
 import { SubjectPage } from "../pages/subjectPage";
-import { Allocation } from "../pages/allocation";
+import { Allocation } from "../pages/allocation/allocation";
 
 const Navigator = () => {
   return (

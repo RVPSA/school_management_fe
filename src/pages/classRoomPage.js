@@ -4,6 +4,7 @@ import { MainContainerHeader } from "../component/mainContainerHeader";
 import { Col, Container, Row, Input, InputGroup } from "reactstrap";
 
 import CButton from "../component/Button/button";
+import TextInputField from "../component/textInputField";
 
 export const ClassRoomPage = () => {
   const [formValues, setFormValues] = useState({});
@@ -14,14 +15,14 @@ export const ClassRoomPage = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
-  const handleSubmit = () => {
+  const addClassRoom = () => {
     setFormErrors(validate(formValues));
     setSubmitting(true);
   };
   const validate = (values) => {
     const errors = {};
-    if (!values.firstName) {
-      errors.firstName = "Please enter first name";
+    if (!values.className) {
+      errors.className = "Please enter class room name";
     }
     return errors;
   };
@@ -40,15 +41,27 @@ export const ClassRoomPage = () => {
             <Row>
               <Col>
                 <Row>
-                  <InputGroup>
-                    <Input placeholder="Class Room Name"></Input>
+                  <Col className="col-10">
+                    <TextInputField
+                      placeholder="Class Room Name"
+                      onChange={handleChange}
+                      name="className"
+                      invalid={formErrors.className ? true : false}
+                      formFeedBack={
+                        formErrors.className ? formErrors.className : ""
+                      }
+                    ></TextInputField>
+                  </Col>
+                  <Col style={{ paddingTop: 25 }}>
                     <CButton
                       text="Add"
                       outline={true}
                       color="success"
-                      onClick={() => {}}
+                      onClick={() => {
+                        addClassRoom();
+                      }}
                     />
-                  </InputGroup>
+                  </Col>
                 </Row>
               </Col>
             </Row>

@@ -7,11 +7,17 @@ export const TextInputField = ({
   onChange,
   invalid,
   name,
+  placeholder,
 }) => {
   return (
     <FormGroup>
       <Label>{label}</Label>
-      <Input onChange={onChange} invalid={invalid} name={name}></Input>
+      <Input
+        onChange={onChange}
+        invalid={invalid}
+        name={name}
+        placeholder={placeholder}
+      ></Input>
       <FormFeedback invalid={invalid}> {formFeedBack}</FormFeedback>
     </FormGroup>
   );
