@@ -5,8 +5,11 @@ import CButton from "../../component/Button/button";
 import { MainContainer } from "../../component/mainCard";
 import { MainContainerHeader } from "../../component/mainContainerHeader";
 import { StudentDetails } from "./collection/studentDetail";
+import { useDispatch, useSelector } from "react-redux";
+import { addingStudent } from "../../store/actions";
 
 export const StudentPage = () => {
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -23,6 +26,7 @@ export const StudentPage = () => {
   const handleSubmit = () => {
     setFormErrors(validate(formValues));
     setSubmitting(true);
+    dispatch(addingStudent("123"));
   };
   const validate = (values) => {
     const errors = {};
@@ -65,9 +69,11 @@ export const StudentPage = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
+      dispatch(addingStudent("123"));
     }
   }, [formErrors]);
-
+  const { isAddingStudent, student } = useSelector((state) => state.student);
+  console.log("STUDENT PAGE::", isAddingStudent, student);
   return (
     <>
       <Container className="p-0">
