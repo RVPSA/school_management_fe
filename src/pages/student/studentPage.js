@@ -6,7 +6,7 @@ import { MainContainer } from "../../component/mainCard";
 import { MainContainerHeader } from "../../component/mainContainerHeader";
 import { StudentDetails } from "./collection/studentDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { addingStudent } from "../../store/actions";
+import { addingStudent, findingStudent } from "../../store/actions";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
@@ -64,7 +64,10 @@ export const StudentPage = () => {
 
   const findStudent = () => {
     if (studentId === "") console.log("Enter a Id");
-    else console.log("Student Id:", studentId);
+    else {
+      console.log("Student Id:", studentId);
+      dispatch(findingStudent(studentId));
+    }
   };
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
@@ -72,8 +75,11 @@ export const StudentPage = () => {
       dispatch(addingStudent("123"));
     }
   }, [formErrors]);
-  const { isAddingStudent, student } = useSelector((state) => state.student);
+  const { isAddingStudent, student, studentDetails } = useSelector(
+    (state) => state.student
+  );
   console.log("STUDENT PAGE::", isAddingStudent, student);
+  console.log("FIND STUDENT::", studentDetails);
   return (
     <>
       <Container className="p-0">
