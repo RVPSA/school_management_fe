@@ -15,7 +15,8 @@ import {
 export function* addSubject({ data }) {
   try {
     console.log(data);
-    const response = yield call(addSubjectService, data);
+    const { subjectName } = data;
+    const response = yield call(addSubjectService, subjectName);
     yield put({ type: ADD_SUBJECT_SUCCESS, response: response.data });
   } catch (error) {
     yield put({ type: ADD_SUBJECT_FAIL, error: error.message });
