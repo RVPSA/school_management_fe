@@ -13,12 +13,18 @@ import {
   UPDATE_STUDENT_FAIL,
   UPDATE_STUDENT_SUCCESS,
 } from "../actions";
+import {
+  deleteStudentService,
+  getStudentSevice,
+  testService,
+  updateStudentService,
+} from "../../services/studentService";
 
 export function* addStudent({ data }) {
   try {
-    // const response = yield call()
-    console.log(data);
-    yield put({ type: ADD_STUDENT_SUCCESS, response: "Student Added" });
+    const response = yield call(testService, data);
+    console.log("Add student response", response.data);
+    yield put({ type: ADD_STUDENT_SUCCESS, response: response.data });
   } catch (error) {
     yield put({ type: ADD_STUDENT_FAIL, error: "FAIL" });
   }
@@ -30,11 +36,11 @@ export function* watchAddStudent() {
 
 export function* findStudent({ data }) {
   try {
-    // const response = yield call()
+    const response = yield call(getStudentSevice, data);
     console.log(data);
     yield put({
       type: FIND_STUDENT_SUCCESS,
-      response: " find Studetnt Success",
+      response: response.data,
     });
   } catch (error) {
     yield put({
@@ -51,8 +57,8 @@ export function* watchFindStudent() {
 export function* deleteStudent({ data }) {
   try {
     console.log(data);
-    // const response = yield call()
-    yield put({ type: DELETE_STUDENT_SUCCESS, response: "Student Delete" });
+    const response = yield call(deleteStudentService, data);
+    yield put({ type: DELETE_STUDENT_SUCCESS, response: response.data });
   } catch (error) {
     yield put({ type: DELETE_STUDENT_FAIL, error: error.message });
   }
@@ -65,8 +71,8 @@ export function* watchDeleteStudent() {
 export function* updateStudent({ data }) {
   try {
     console.log(data);
-    // const response = yield call()
-    yield put({ type: UPDATE_STUDENT_SUCCESS, response: "Update succcess" });
+    const response = yield call(updateStudentService, data);
+    yield put({ type: UPDATE_STUDENT_SUCCESS, response: response.data });
   } catch (error) {
     yield put({ type: UPDATE_STUDENT_FAIL, error: error.message });
   }

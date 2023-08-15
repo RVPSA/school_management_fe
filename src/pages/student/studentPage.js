@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Input, InputGroup, Row } from "reactstrap";
+import {
+  Alert,
+  Col,
+  Container,
+  Dropdown,
+  Input,
+  InputGroup,
+  Label,
+  Row,
+} from "reactstrap";
 import TextInputField from "../../component/textInputField";
 import CButton from "../../component/Button/button";
 import { MainContainer } from "../../component/mainCard";
 import { MainContainerHeader } from "../../component/mainContainerHeader";
 import { StudentDetails } from "./collection/studentDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { addingStudent, findingStudent } from "../../store/actions";
+import {
+  addingStudent,
+  findingStudent,
+  gettingClassroom,
+} from "../../store/actions";
+import { DropDownCu } from "../../component/dropdown";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
@@ -20,33 +34,45 @@ export const StudentPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    if (
+      name === "contact_number" ||
+      name === "age" ||
+      name === "classroom_Id"
+    ) {
+      setFormValues({ ...formValues, [name]: parseInt(value) });
+    } else {
+      setFormValues({ ...formValues, [name]: value });
+    }
   };
 
   const handleSubmit = () => {
     setFormErrors(validate(formValues));
     setSubmitting(true);
-    dispatch(addingStudent("123"));
+    // dispatch(addingStudent(formValues));
+    console.log(formValues);
   };
   const validate = (values) => {
     const errors = {};
-    if (!values.firstName) {
-      errors.firstName = "Please enter first name";
+    if (!values.first_name) {
+      errors.first_name = "Please enter first name";
     }
-    if (!values.lastName) {
-      errors.lastName = "Please enter last name";
+    if (!values.last_name) {
+      errors.last_name = "Please enter last name";
     }
-    if (!values.contactPerson) {
-      errors.contactPerson = "Please enter contact person";
+    if (!values.contact_person) {
+      errors.contact_person = "Please enter contact person";
     }
-    if (!values.mobileNumber) {
-      errors.mobileNumber = "Please enter mobile number";
+    if (!values.contact_number) {
+      errors.contact_number = "Please enter mobile number";
     }
-    if (!values.eMail) {
-      errors.eMail = "Please enter email";
+    if (!values.email) {
+      errors.email = "Please enter email";
     }
     if (!values.dob) {
       errors.dob = "Please enter Date of birth";
+    }
+    if (!values.classroom_Id) {
+      errors.classroom_Id = "Please select a classroom";
     }
     return errors;
   };
@@ -72,14 +98,25 @@ export const StudentPage = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
-      dispatch(addingStudent("123"));
+      dispatch(addingStudent(formValues));
     }
+    dispatch(gettingClassroom());
   }, [formErrors]);
   const { isAddingStudent, student, studentDetails } = useSelector(
     (state) => state.student
   );
+  const { getClassRoom, isGettingClassRoomFail, isGettingClassRoom } =
+    useSelector((state) => state.classroom);
   console.log("STUDENT PAGE::", isAddingStudent, student);
   console.log("FIND STUDENT::", studentDetails);
+  const data = [];
+  getClassRoom.map((item) =>
+    data.push({
+      name: item.classroom_name,
+      value: item.classroom_Id,
+    })
+  );
+  console.log(data);
   return (
     <>
       <Container className="p-0">
@@ -116,22 +153,22 @@ export const StudentPage = () => {
                     <Col className="col-4">
                       <TextInputField
                         label="First Name"
-                        name="firstName"
+                        name="first_name"
                         onChange={handleChange}
-                        invalid={formErrors.firstName ? true : false}
+                        invalid={formErrors.first_name ? true : false}
                         formFeedBack={
-                          formErrors.firstName ? formErrors.firstName : ""
+                          formErrors.first_name ? formErrors.first_name : ""
                         }
                       />
                     </Col>
                     <Col>
                       <TextInputField
                         label="Last Name"
-                        name="lastName"
+                        name="last_name"
                         onChange={handleChange}
-                        invalid={formErrors.lastName ? true : false}
+                        invalid={formErrors.last_name ? true : false}
                         formFeedBack={
-                          formErrors.lastName ? formErrors.lastName : ""
+                          formErrors.last_name ? formErrors.last_name : ""
                         }
                       />
                     </Col>
@@ -140,12 +177,12 @@ export const StudentPage = () => {
                     <Col>
                       <TextInputField
                         label="Contact Person"
-                        name="contactPerson"
+                        name="contact_person"
                         onChange={handleChange}
-                        invalid={formErrors.contactPerson ? true : false}
+                        invalid={formErrors.contact_person ? true : false}
                         formFeedBack={
-                          formErrors.contactPerson
-                            ? formErrors.contactPerson
+                          formErrors.contact_person
+                            ? formErrors.contact_person
                             : ""
                         }
                       />
@@ -153,11 +190,13 @@ export const StudentPage = () => {
                     <Col className="col-4">
                       <TextInputField
                         label="Mobile Number"
-                        name="mobileNumber"
+                        name="contact_number"
                         onChange={handleChange}
-                        invalid={formErrors.mobileNumber ? true : false}
+                        invalid={formErrors.contact_number ? true : false}
                         formFeedBack={
-                          formErrors.mobileNumber ? formErrors.mobileNumber : ""
+                          formErrors.contact_number
+                            ? formErrors.contact_number
+                            : ""
                         }
                       />
                     </Col>
@@ -166,10 +205,10 @@ export const StudentPage = () => {
                     <Col>
                       <TextInputField
                         label="E-mail"
-                        name="eMail"
+                        name="email"
                         onChange={handleChange}
-                        invalid={formErrors.eMail ? true : false}
-                        formFeedBack={formErrors.eMail ? formErrors.eMail : ""}
+                        invalid={formErrors.email ? true : false}
+                        formFeedBack={formErrors.email ? formErrors.email : ""}
                       />
                     </Col>
                     <Col>
@@ -192,14 +231,35 @@ export const StudentPage = () => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
-                      <TextInputField
-                        label="Age"
-                        name="age"
+                    <Col className="align-self-center">
+                      {/* <TextInputField
+                        label="Class"
+                        name="classroom_Id"
                         onChange={handleChange}
-                        invalid={formErrors.age ? true : false}
-                        formFeedBack={formErrors.age ? formErrors.age : ""}
-                      />
+                        invalid={formErrors.classroom_Id ? true : false}
+                        formFeedBack={
+                          formErrors.classroom_Id ? formErrors.classroom_Id : ""
+                        }
+                      /> */}
+                      {/* <Label>Class</Label>
+                      <br></br>
+                      <select
+                        style={{
+                          width: "85%",
+                          height: 38,
+                          border: "1px solid #e9ecef",
+                          borderRadius: "5px",
+                          outline: 0,
+                        }}
+                      >
+                        <option>ABC</option>
+                      </select> */}
+                      <DropDownCu
+                        label="Class"
+                        data={data}
+                        onchange={handleChange}
+                        name="classroom_Id"
+                      ></DropDownCu>
                     </Col>
                     <Col className="col-3 align-self-center">
                       <Row className="justify-content-end mt-3">
@@ -237,6 +297,9 @@ export const StudentPage = () => {
               )}
             </Row>
           </Container>
+          {!Array.isArray(student) && (
+            <Alert color="primary">Student Added SuccessFully</Alert>
+          )}
         </MainContainer>
       </Container>
     </>

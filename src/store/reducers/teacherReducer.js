@@ -1,9 +1,19 @@
-import { ADD_TEACHER, ADD_TEACHER_FAIL, ADD_TEACHER_SUCCESS } from "../actions";
+import {
+  ADD_TEACHER,
+  ADD_TEACHER_FAIL,
+  ADD_TEACHER_SUCCESS,
+  GET_ALL_TEACHER,
+  GET_ALL_TEACHER_FAIL,
+  GET_ALL_TEACHER_SUCCESS,
+} from "../actions";
 
 export const initialState = {
   isAddingTeacher: false,
   isAddingTeacherFail: false,
   addTeacher: [],
+  getAllTeacher: [],
+  isGettingAllTeaher: false,
+  isGettingAllTeaherFail: false,
 };
 
 const teacherReducer = (state = initialState, action) => {
@@ -25,6 +35,24 @@ const teacherReducer = (state = initialState, action) => {
         ...state,
         isAddingTeacher: false,
         isAddingTeacherFail: true,
+      };
+    case GET_ALL_TEACHER:
+      return {
+        ...state,
+        isGettingAllTeaher: true,
+      };
+    case GET_ALL_TEACHER_SUCCESS:
+      const getAllTeacher = action.response;
+      return {
+        ...state,
+        isGettingAllTeaher: false,
+        getAllTeacher: getAllTeacher,
+      };
+    case GET_ALL_TEACHER_FAIL:
+      return {
+        ...state,
+        isGettingAllTeaher: false,
+        isGettingAllTeaherFail: true,
       };
     default:
       return state;
