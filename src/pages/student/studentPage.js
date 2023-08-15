@@ -21,6 +21,7 @@ import {
   gettingClassroom,
 } from "../../store/actions";
 import { DropDownCu } from "../../component/dropdown";
+import { Loading } from "../../component/loading/loadingSpinner";
 
 export const StudentPage = () => {
   const dispatch = useDispatch();
@@ -102,9 +103,13 @@ export const StudentPage = () => {
     }
     dispatch(gettingClassroom());
   }, [formErrors]);
-  const { isAddingStudent, student, studentDetails } = useSelector(
-    (state) => state.student
-  );
+  const {
+    isAddingStudent,
+    student,
+    studentDetails,
+    isFindingStudent,
+    isFindingStudentFail,
+  } = useSelector((state) => state.student);
   const { getClassRoom, isGettingClassRoomFail, isGettingClassRoom } =
     useSelector((state) => state.classroom);
   console.log("STUDENT PAGE::", isAddingStudent, student);
@@ -290,8 +295,17 @@ export const StudentPage = () => {
                       />
                     </InputGroup>
                   </Row>
+
                   <Row>
-                    <StudentDetails />
+                    {isFindingStudent && (
+                      <Container style={{ marginTop: 50, marginLeft: 50 }}>
+                        <Loading></Loading>
+                      </Container>
+                    )}
+
+                    {Object.keys(studentDetails).length != 0 && (
+                      <StudentDetails details={studentDetails} />
+                    )}
                   </Row>
                 </Col>
               )}

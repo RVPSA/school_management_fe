@@ -7,15 +7,19 @@ import {
   GET_CLASSROOM_FAIL,
   GET_CLASSROOM_SUCCESS,
 } from "../actions";
-import { getAllClassRoom } from "../../services/classroomService";
+import {
+  addClassRoomService,
+  getAllClassRoom,
+} from "../../services/classroomService";
 
 export function* addClassRoom({ data }) {
   try {
     console.log(data);
-    // const response = yield call()
+    const { className } = data;
+    const response = yield call(addClassRoomService, className);
     yield put({
       type: ADD_CLASSROOM_SUCCESS,
-      response: " add classroom Success",
+      response: response.data,
     });
   } catch (error) {
     yield put({ type: ADD_CLASSROOM_FAIL, error: error.message });

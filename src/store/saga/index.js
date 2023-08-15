@@ -5,9 +5,20 @@ import {
   watchFindStudent,
   watchUpdateStudent,
 } from "./studentSaga";
-import { watchAddTeacher, watchGetAllTeacher } from "./teacherSaga";
+import {
+  watchAddTeacher,
+  watchGetAllAllocateClass,
+  watchGetAllAllocateSubject,
+  watchGetAllTeacher,
+} from "./teacherSaga";
 import { watchAddClassRoom, watchGetClassroom } from "./classroomSaga";
 import { watchAddSubject, watchGetAllSubject } from "./subjectSaga";
+import {
+  watchAllocateClassroom,
+  watchAllocateSubject,
+  watchDeallocateClassroom,
+  watchDeallocateSubject,
+} from "./allocateSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -20,6 +31,8 @@ export default function* rootSaga() {
     //Teacher saga
     watchAddTeacher(),
     watchGetAllTeacher(),
+    watchGetAllAllocateClass(),
+    watchGetAllAllocateSubject(),
 
     //classRoom Saga
     watchAddClassRoom(),
@@ -28,5 +41,11 @@ export default function* rootSaga() {
     //subject saga
     watchAddSubject(),
     watchGetAllSubject(),
+
+    //Alloccation saga
+    watchAllocateClassroom(),
+    watchDeallocateClassroom(),
+    watchAllocateSubject(),
+    watchDeallocateSubject(),
   ]);
 }

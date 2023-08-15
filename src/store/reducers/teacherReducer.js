@@ -2,6 +2,12 @@ import {
   ADD_TEACHER,
   ADD_TEACHER_FAIL,
   ADD_TEACHER_SUCCESS,
+  GET_ALL_ALLOCATE_CLASS,
+  GET_ALL_ALLOCATE_CLASS_FAIL,
+  GET_ALL_ALLOCATE_CLASS_SUCCESS,
+  GET_ALL_ALLOCATE_SUBJECT,
+  GET_ALL_ALLOCATE_SUBJECT_FAIL,
+  GET_ALL_ALLOCATE_SUBJECT_SUCCESS,
   GET_ALL_TEACHER,
   GET_ALL_TEACHER_FAIL,
   GET_ALL_TEACHER_SUCCESS,
@@ -14,6 +20,8 @@ export const initialState = {
   getAllTeacher: [],
   isGettingAllTeaher: false,
   isGettingAllTeaherFail: false,
+  allAllocateClass: [],
+  allAllocateSubject: [],
 };
 
 const teacherReducer = (state = initialState, action) => {
@@ -54,6 +62,26 @@ const teacherReducer = (state = initialState, action) => {
         isGettingAllTeaher: false,
         isGettingAllTeaherFail: true,
       };
+    case GET_ALL_ALLOCATE_CLASS:
+      return { ...state };
+    case GET_ALL_ALLOCATE_CLASS_SUCCESS:
+      const allAllocateClass = action.response;
+      return {
+        ...state,
+        allAllocateClass: allAllocateClass,
+      };
+    case GET_ALL_ALLOCATE_CLASS_FAIL:
+      return { ...state };
+    case GET_ALL_ALLOCATE_SUBJECT:
+      return { ...state };
+    case GET_ALL_ALLOCATE_SUBJECT_SUCCESS:
+      const allAllocateSubject = action.response;
+      return {
+        ...state,
+        allAllocateSubject: allAllocateSubject,
+      };
+    case GET_ALL_ALLOCATE_SUBJECT_FAIL:
+      return { ...state };
     default:
       return state;
   }

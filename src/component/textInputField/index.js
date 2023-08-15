@@ -8,6 +8,7 @@ export const TextInputField = ({
   invalid,
   name,
   placeholder,
+  isDisabled,
 }) => {
   return (
     <FormGroup>
@@ -17,6 +18,7 @@ export const TextInputField = ({
         invalid={invalid}
         name={name}
         placeholder={placeholder}
+        disabled={isDisabled}
       ></Input>
       <FormFeedback invalid={invalid}> {formFeedBack}</FormFeedback>
     </FormGroup>

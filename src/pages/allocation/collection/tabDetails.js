@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -12,9 +12,16 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 import CButton from "../../../component/Button/button";
+import { DropDownCu } from "../../../component/dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { gettingAllTeacher } from "../../../store/actions/teacher";
 
-export const TabDetails = ({ alloctionName }) => {
-  const [teacherDropDown, setTeacherDropDown] = useState(false);
+export const TabDetails = ({ alloctionName, details }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(gettingAllTeacher());
+  }, []);
+  const { getAllTeacher } = useSelector((state) => state.teacher);
   return (
     <>
       <Col>
@@ -22,23 +29,15 @@ export const TabDetails = ({ alloctionName }) => {
           <Col className="col-2">Teacher</Col>
           <Col>
             <Container className="fluid">
-              {/* <Dropdown
-                direction="down"
-                isOpen={teacherDropDown}
-                toggle={() => {
-                  setTeacherDropDown(!teacherDropDown);
-                }}
-              >
-                <DropdownToggle aria-expanded color="primary">
-                  Select a teacher
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Teacher 1</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Teacher 2</DropdownItem>
-                </DropdownMenu>
-              </Dropdown> */}
-              <Input></Input>
+              <Input type="select">
+                {getAllTeacher.map((teacher) => {
+                  return (
+                    <option value={teacher.teacher_Id}>
+                      {teacher.first_name + " " + teacher.last_name}
+                    </option>
+                  );
+                })}
+              </Input>
             </Container>
           </Col>
           <Col className="col-2">
@@ -49,7 +48,11 @@ export const TabDetails = ({ alloctionName }) => {
           <Row>
             <Col>{alloctionName}</Col>
             <Col>
-              <Input></Input>
+              <Input type="select">
+                {details.map((item) => {
+                  return <option value={item.value}>{item.name}</option>;
+                })}
+              </Input>
             </Col>
             <Col>
               <CButton text="Select"></CButton>

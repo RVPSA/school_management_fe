@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { MainContainer } from "../component/mainCard";
 import { MainContainerHeader } from "../component/mainContainerHeader";
-import { Col, Container, Row, Input, InputGroup } from "reactstrap";
+import { Col, Container, Row, Input, InputGroup, Alert } from "reactstrap";
 
 import CButton from "../component/Button/button";
 import TextInputField from "../component/textInputField";
+import { useDispatch, useSelector } from "react-redux";
+import { addingClassRoom } from "../store/actions";
 
 export const ClassRoomPage = () => {
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -15,7 +18,7 @@ export const ClassRoomPage = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
-  const addClassRoom = () => {
+  const addClassRoomM = () => {
     setFormErrors(validate(formValues));
     setSubmitting(true);
   };
@@ -29,9 +32,12 @@ export const ClassRoomPage = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
+      dispatch(addingClassRoom(formValues));
     }
   }, [formErrors]);
-
+  const { addClassRoom, isAddingClassRoomFail } = useSelector(
+    (state) => state.classroom
+  );
   return (
     <>
       <Container className="p-0">
@@ -58,7 +64,7 @@ export const ClassRoomPage = () => {
                       outline={true}
                       color="success"
                       onClick={() => {
-                        addClassRoom();
+                        addClassRoomM();
                       }}
                     />
                   </Col>
@@ -66,6 +72,9 @@ export const ClassRoomPage = () => {
               </Col>
             </Row>
           </Container>
+          {!Array.isArray(addClassRoom) && (
+            <Alert color="primary">classroom Added SuccessFully</Alert>
+          )}
         </MainContainer>
       </Container>
     </>

@@ -6,3 +6,6 @@ export * from "./teacher/types";
 
 export * from "./classRoom";
 export * from "./classRoom/types";
+
+export * from "./allocation";
+export * from "./allocation/types";

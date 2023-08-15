@@ -14,3 +14,17 @@ export const addTeacherService = async (data) => {
   );
   return response;
 };
+
+export const getClassAllocationService = async (data) => {
+  const response = await axios.get(
+    `http://localhost:47696/api/teacher/getallocationclass?id=${data}`
+  );
+  return response;
+};
+
+export const getSubjectAllocationService = async (data) => {
+  const response = await axios.get(
+    `http://localhost:47696/api/teacher/getallocationsubject?id=${data}`
+  );
+  return response;
+};

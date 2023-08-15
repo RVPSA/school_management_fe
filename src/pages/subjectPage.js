@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { MainContainer } from "../component/mainCard";
 import { MainContainerHeader } from "../component/mainContainerHeader";
-import { Col, Container, Row, Input, InputGroup } from "reactstrap";
+import { Col, Container, Row, Input, InputGroup, Alert } from "reactstrap";
 
 import CButton from "../component/Button/button";
 import TextInputField from "../component/textInputField";
 import { Loading } from "../component/loading/loadingSpinner";
+import { useDispatch, useSelector } from "react-redux";
+import { addingSubject } from "../store/actions/subject";
 
 export const SubjectPage = () => {
+  const dispatch = useDispatch();
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -30,9 +33,12 @@ export const SubjectPage = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
+      dispatch(addingSubject(formValues));
     }
   }, [formErrors]);
-
+  const { addSubject, isAddingSubjectFail, isAddingSubject } = useSelector(
+    (state) => state.subject
+  );
   return (
     <>
       <Container className="p-0">
@@ -67,6 +73,9 @@ export const SubjectPage = () => {
               </Col>
             </Row>
           </Container>
+          {!Array.isArray(addSubject) && (
+            <Alert color="primary">Subject Added SuccessFully</Alert>
+          )}
         </MainContainer>
       </Container>
     </>
