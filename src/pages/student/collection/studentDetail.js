@@ -28,7 +28,8 @@ export const StudentDetails = ({ details }) => {
   // const [activeTab, setActiveTab] = useState("1");
   const [updateDetails, setUpdateDetails] = useState({});
   useEffect(() => {
-    setUpdateDetails(details);
+    const { student } = details;
+    setUpdateDetails(student);
   }, [details]);
   console.log("Updatedetails", updateDetails);
   const handleChange = (e) => {
@@ -43,7 +44,7 @@ export const StudentDetails = ({ details }) => {
   };
 
   const deleteStudent = () => {
-    dispatch(deletingStudent(details.student_Id));
+    dispatch(deletingStudent(details.student.student_Id));
   };
   const updateStudent = () => {
     dispatch(updatingStudent(updateDetails));
@@ -74,7 +75,9 @@ export const StudentDetails = ({ details }) => {
             <Col>
               <Input
                 disabled={true}
-                value={details.first_name + " " + details.last_name}
+                value={
+                  details.student.first_name + " " + details.student.last_name
+                }
               />
             </Col>
           </Row>
@@ -82,7 +85,7 @@ export const StudentDetails = ({ details }) => {
             <Col>Contact Person</Col>
             <Col>
               <Input
-                defaultValue={details.contact_person}
+                defaultValue={details.student.contact_person}
                 name="contact_person"
                 onChange={handleChange}
               />
@@ -92,7 +95,7 @@ export const StudentDetails = ({ details }) => {
             <Col>Contact Number</Col>
             <Col>
               <Input
-                defaultValue={details.contact_number}
+                defaultValue={details.student.contact_number}
                 name="contact_number"
                 onChange={handleChange}
               />
@@ -103,14 +106,14 @@ export const StudentDetails = ({ details }) => {
           <Row style={{ marginBottom: 10, marginTop: 10 }}>
             <Col>Classroom</Col>
             <Col>
-              <Input defaultValue={details.classroom_Id} disabled={true} />
+              <Input defaultValue={details.class_name} disabled={true} />
             </Col>
           </Row>
           <Row style={{ marginBottom: 10 }}>
             <Col>Email address</Col>
             <Col>
               <Input
-                defaultValue={details.email}
+                defaultValue={details.student.email}
                 name="email"
                 onChange={handleChange}
               />
@@ -119,7 +122,7 @@ export const StudentDetails = ({ details }) => {
           <Row style={{ marginBottom: 10 }}>
             <Col>Date of birth</Col>
             <Col>
-              <Input disabled={true} value={details.dob} />
+              <Input disabled={true} value={details.student.dob} />
             </Col>
           </Row>
         </Col>
@@ -134,14 +137,16 @@ export const StudentDetails = ({ details }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>English</td>
-              <td>Teacher 1</td>
-            </tr>
-            <tr>
-              <td>Science</td>
-              <td>Teacher 2</td>
-            </tr>
+            {details.teacherSubject.map((item) => {
+              return (
+                <>
+                  <tr>
+                    <td>{item.subject_name}</td>
+                    <td>{item.first_name + " " + item.last_name}</td>
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </Table>
       </Row>

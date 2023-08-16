@@ -19,6 +19,7 @@ export const DropDownCu = ({ label, data, onchange, name }) => {
         name={name}
         onClick={onchange.bind()}
       >
+        <option value=""></option>
         {data.map((item) => {
           return <option value={item.value}>{item.name}</option>;
         })}

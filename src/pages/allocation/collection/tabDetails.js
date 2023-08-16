@@ -14,48 +14,56 @@ import {
 import CButton from "../../../component/Button/button";
 import { DropDownCu } from "../../../component/dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { gettingAllTeacher } from "../../../store/actions/teacher";
 
-export const TabDetails = ({ alloctionName, details }) => {
-  const dispatch = useDispatch();
+export const TabDetails = ({
+  alloctionName,
+  nonAllocate,
+  allocate,
+  allocateMethod,
+  deAllocateMethod,
+}) => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const {
+    allocateSubject,
+    allocateClassroom,
+    deAllocateSubject,
+    deAllocateClassroom,
+  } = useSelector((state) => state.allocation);
   useEffect(() => {
-    dispatch(gettingAllTeacher());
-  }, []);
-  const { getAllTeacher } = useSelector((state) => state.teacher);
+    console.log("tab details");
+  }, [
+    allocateClassroom,
+    allocateSubject,
+    deAllocateSubject,
+    deAllocateClassroom,
+    nonAllocate,
+    allocate,
+  ]);
   return (
     <>
       <Col>
-        <Row className="mt-5 border p-2 bg-success bg-opacity-10">
-          <Col className="col-2">Teacher</Col>
-          <Col>
-            <Container className="fluid">
-              <Input type="select">
-                {getAllTeacher.map((teacher) => {
-                  return (
-                    <option value={teacher.teacher_Id}>
-                      {teacher.first_name + " " + teacher.last_name}
-                    </option>
-                  );
-                })}
-              </Input>
-            </Container>
-          </Col>
-          <Col className="col-2">
-            <CButton text="Select"></CButton>
-          </Col>
-        </Row>
         <Row className="mt-5 border p-3 bg-success bg-opacity-10">
           <Row>
             <Col>{alloctionName}</Col>
             <Col>
-              <Input type="select">
-                {details.map((item) => {
+              <Input
+                type="select"
+                onClick={(event) =>
+                  setSelectedValue(parseInt(event.target.value))
+                }
+              >
+                {nonAllocate.map((item) => {
                   return <option value={item.value}>{item.name}</option>;
                 })}
               </Input>
             </Col>
             <Col>
-              <CButton text="Select"></CButton>
+              <CButton
+                text="Allocate"
+                onClick={() => {
+                  allocateMethod(selectedValue);
+                }}
+              ></CButton>
             </Col>
           </Row>
           <Row className="mt-5">
@@ -67,18 +75,21 @@ export const TabDetails = ({ alloctionName, details }) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>English</td>
-                  <td>
-                    <CButton text="Deallocate" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Science</td>
-                  <td>
-                    <CButton text="Deallocate" />
-                  </td>
-                </tr>
+                {allocate.map((item) => {
+                  return (
+                    <>
+                      <tr>
+                        <td>{item.name}</td>
+                        <td>
+                          <CButton
+                            text="Deallocate"
+                            onClick={() => deAllocateMethod(item.value)}
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
               </tbody>
             </Table>
           </Row>

@@ -32,6 +32,8 @@ export const StudentPage = () => {
   const [btnOutlineFind, setBtnOutlineFind] = useState(true);
   const [addStudent, setAddStudent] = useState(true);
   const [studentId, setStudentId] = useState("");
+  const [age, setAge] = useState("");
+  const [dobb, setdob] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +45,16 @@ export const StudentPage = () => {
       setFormValues({ ...formValues, [name]: parseInt(value) });
     } else {
       setFormValues({ ...formValues, [name]: value });
+    }
+
+    if (name === "dob") {
+      const today = new Date();
+      const birthDate = new Date(e.target.value);
+      var val = birthDate;
+      var diff = (today.getTime() - birthDate.getTime()) / 1000;
+      diff /= 60 * 60 * 24;
+      var ageC = Math.abs(Math.round(diff / 365.25));
+      setAge(ageC);
     }
   };
 
@@ -99,7 +111,13 @@ export const StudentPage = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && submitting) {
       console.log(formValues);
-      dispatch(addingStudent(formValues));
+      var data = {
+        ...formValues,
+        age: age,
+      };
+
+      console.log("data::::", data);
+      dispatch(addingStudent(data));
     }
     dispatch(gettingClassroom());
   }, [formErrors]);
@@ -223,6 +241,8 @@ export const StudentPage = () => {
                         onChange={handleChange}
                         invalid={formErrors.dob ? true : false}
                         formFeedBack={formErrors.dob ? formErrors.dob : ""}
+                        placeholder={"DD/MM/YYYY"}
+                        type="date"
                       />
                     </Col>
                     <Col>
@@ -232,6 +252,8 @@ export const StudentPage = () => {
                         onChange={handleChange}
                         invalid={formErrors.age ? true : false}
                         formFeedBack={formErrors.age ? formErrors.age : ""}
+                        isDisabled={true}
+                        value={age}
                       />
                     </Col>
                   </Row>
@@ -265,6 +287,11 @@ export const StudentPage = () => {
                         onchange={handleChange}
                         name="classroom_Id"
                       ></DropDownCu>
+                      {formErrors.classroom_Id && (
+                        <div style={{ color: "red" }}>
+                          {formErrors.classroom_Id}
+                        </div>
+                      )}
                     </Col>
                     <Col className="col-3 align-self-center">
                       <Row className="justify-content-end mt-3">
@@ -277,6 +304,11 @@ export const StudentPage = () => {
                       </Row>
                     </Col>
                   </Row>
+                  <div style={{ marginTop: 20 }}>
+                    {!Array.isArray(student) && (
+                      <Alert color="primary">Student Added SuccessFully</Alert>
+                    )}
+                  </div>
                 </Col>
               ) : (
                 <Col className="col-10 ">
@@ -311,9 +343,6 @@ export const StudentPage = () => {
               )}
             </Row>
           </Container>
-          {!Array.isArray(student) && (
-            <Alert color="primary">Student Added SuccessFully</Alert>
-          )}
         </MainContainer>
       </Container>
     </>

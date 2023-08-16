@@ -22,6 +22,7 @@ export const initialState = {
   isGettingAllTeaherFail: false,
   allAllocateClass: [],
   allAllocateSubject: [],
+  isGetAllAllocate: false,
 };
 
 const teacherReducer = (state = initialState, action) => {
@@ -69,6 +70,7 @@ const teacherReducer = (state = initialState, action) => {
       return {
         ...state,
         allAllocateClass: allAllocateClass,
+        isGetAllAllocate: true,
       };
     case GET_ALL_ALLOCATE_CLASS_FAIL:
       return { ...state };
@@ -79,6 +81,7 @@ const teacherReducer = (state = initialState, action) => {
       return {
         ...state,
         allAllocateSubject: allAllocateSubject,
+        isGetAllAllocate: true,
       };
     case GET_ALL_ALLOCATE_SUBJECT_FAIL:
       return { ...state };

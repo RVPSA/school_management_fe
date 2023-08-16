@@ -15,19 +15,19 @@ export const allocateSubjectService = async (data) => {
   );
   return response;
 };
-
+//special case when delete
 export const deallocateClassService = async (data) => {
-  const response = await axios.post(
+  const response = await axios.delete(
     "http://localhost:47696/api/allocate/removeclassroom",
-    data
+    { data: data }
   );
   return response;
 };
 
 export const deallocateSubjectService = async (data) => {
-  const response = await axios.post(
+  const response = await axios.delete(
     "http://localhost:47696/api/allocate/removesubject",
-    data
+    { data: data }
   );
   return response;
 };

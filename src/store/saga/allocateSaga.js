@@ -22,6 +22,7 @@ import {
 export function* allocateClassroom({ data }) {
   try {
     const response = yield call(allocateClassService, data);
+
     yield put({ type: ALLOCATE_CLASSROOM_SUCCESS, response: response.data });
   } catch (error) {
     yield put({ type: ALLOCATE_CLASSROOM_FAIL, error: error.message });
