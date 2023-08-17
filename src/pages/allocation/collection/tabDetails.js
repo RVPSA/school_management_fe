@@ -52,6 +52,7 @@ export const TabDetails = ({
                   setSelectedValue(parseInt(event.target.value))
                 }
               >
+                <option value=""></option>
                 {nonAllocate.map((item) => {
                   return <option value={item.value}>{item.name}</option>;
                 })}

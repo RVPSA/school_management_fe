@@ -246,6 +246,7 @@ export const Allocation = () => {
                             setSelectedTeacherID(parseInt(event.target.value))
                           }
                         >
+                          <option value=""></option>
                           {getAllTeacher.map((teacher) => {
                             return (
                               <option value={teacher.teacher_Id}>

@@ -45,9 +45,6 @@ export const TeacherPage = () => {
     if (!values.email) {
       errors.email = "Please enter email";
     }
-    if (!values.classroom_Id) {
-      errors.classroom_Id = "Please select a classroom";
-    }
     return errors;
   };
   useEffect(() => {
@@ -137,20 +134,20 @@ export const TeacherPage = () => {
                 </Row>
                 <Row className="px-3">
                   <Col>
-                    <DropDownCu
+                    {/* <DropDownCu
                       label="Class"
                       data={data}
                       onchange={handleChange}
                       name="classroom_Id"
-                    ></DropDownCu>
+                    ></DropDownCu> */}
                   </Col>
                   <Col>
-                    <DropDownCu
+                    {/* <DropDownCu
                       label="Subject"
                       data={data2}
                       onchange={handleChange}
                       name="subject_Id"
-                    ></DropDownCu>
+                    ></DropDownCu> */}
                   </Col>
                   <Col className="col-3 align-self-center">
                     <Row className="justify-content-end mt-3">

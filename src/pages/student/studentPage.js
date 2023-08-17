@@ -66,6 +66,8 @@ export const StudentPage = () => {
   };
   const validate = (values) => {
     const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const mRegx = /^[1-9]\d{8}$/;
     if (!values.first_name) {
       errors.first_name = "Please enter first name";
     }
@@ -77,9 +79,13 @@ export const StudentPage = () => {
     }
     if (!values.contact_number) {
       errors.contact_number = "Please enter mobile number";
+    } else if (!mRegx.test(values.contact_number)) {
+      errors.contact_number = "Invalid format";
     }
     if (!values.email) {
       errors.email = "Please enter email";
+    } else if (!regex.test(values.email)) {
+      errors.email = "invalid mail format";
     }
     if (!values.dob) {
       errors.dob = "Please enter Date of birth";
@@ -221,6 +227,7 @@ export const StudentPage = () => {
                             ? formErrors.contact_number
                             : ""
                         }
+                        placeholder="11xxxxxxx"
                       />
                     </Col>
                   </Row>
@@ -306,7 +313,10 @@ export const StudentPage = () => {
                   </Row>
                   <div style={{ marginTop: 20 }}>
                     {!Array.isArray(student) && (
-                      <Alert color="primary">Student Added SuccessFully</Alert>
+                      <Alert color="primary">
+                        {"Student Added SuccessFully with ID " +
+                          student.student_Id}
+                      </Alert>
                     )}
                   </div>
                 </Col>
