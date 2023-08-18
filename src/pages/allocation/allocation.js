@@ -49,10 +49,8 @@ export const Allocation = () => {
     allocateClassroom,
     deAllocateSubject,
     deAllocateClassroom,
+    happen,
   } = useSelector((state) => state.allocation);
-
-  console.log("Allocate class::", allAllocateClass);
-  console.log("Allocate class::", allAllocateSubject);
 
   //to extract classroom Id from allocated classroom list
   const allocatedClassId = [];
@@ -146,9 +144,15 @@ export const Allocation = () => {
     dispatch(gettingClassroom());
     dispatch(gettingAllSubject());
     dispatch(gettingAllTeacher());
-    console.log("USE");
-  }, [allocateClassroom.classroom_Id]);
-
+    console.log("USe Effect");
+    if (Object.keys(allocateClassroom).length != 0) {
+      dispatch(gettingAllAllocateClass(selectedTeacherId));
+    }
+    if (Object.keys(allocateSubject).length != 0) {
+      dispatch(gettingAllAllocateSubject(selectedTeacherId));
+    }
+  }, [allocateClassroom, allocateSubject]);
+  console.log(allAllocateClass);
   return (
     <>
       <Container className="p-0">
