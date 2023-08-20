@@ -18,8 +18,6 @@ export const initialState = {
   allocateClassroom: [],
   deAllocateSubject: "",
   deAllocateClassroom: "",
-
-  happen: false,
 };
 
 const allocationReducer = (state = initialState, action) => {
@@ -31,7 +29,6 @@ const allocationReducer = (state = initialState, action) => {
       return {
         ...state,
         allocateClassroom: allocateClassroom,
-        happen: true,
       };
     case ALLOCATE_CLASSROOM_FAIL:
       return { ...state };
@@ -42,7 +39,6 @@ const allocationReducer = (state = initialState, action) => {
       return {
         ...state,
         allocateSubject: allocateSubject,
-        happen: true,
       };
     case ALLOCATE_SUBJECT_FAIL:
       return {
@@ -57,7 +53,6 @@ const allocationReducer = (state = initialState, action) => {
       return {
         ...state,
         deAllocateClassroom: deAllocateClassroom,
-        happen: true,
       };
     case DEALLOCATE_CLASSROOM_FAIL:
       return {
@@ -72,7 +67,6 @@ const allocationReducer = (state = initialState, action) => {
       return {
         ...state,
         deAllocateSubject: deAllocateSubject,
-        happen: true,
       };
     case DEALLOCATE_SUBJECT_FAIL:
       return {
