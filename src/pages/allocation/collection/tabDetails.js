@@ -23,22 +23,7 @@ export const TabDetails = ({
   deAllocateMethod,
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
-  const {
-    allocateSubject,
-    allocateClassroom,
-    deAllocateSubject,
-    deAllocateClassroom,
-  } = useSelector((state) => state.allocation);
-  useEffect(() => {
-    console.log("tab details");
-  }, [
-    allocateClassroom,
-    allocateSubject,
-    deAllocateSubject,
-    deAllocateClassroom,
-    nonAllocate,
-    allocate,
-  ]);
+
   return (
     <>
       <Col>
